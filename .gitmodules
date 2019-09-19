@@ -1,0 +1,3 @@
+[submodule "Controllers/vCenter"]
+	path = Controllers/vCenter
+	url = https://github.com/Auto-Systems/vCenter-Controller.git
