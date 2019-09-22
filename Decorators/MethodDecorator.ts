@@ -1,8 +1,8 @@
 // Backend/src/modules/Controller/Decorators/MethodDecorator.ts
 import {
-  MethodDecoratorConfiguration,
-  ControllerModule,
   ControllerMethodENUM,
+  ControllerModule,
+  MethodDecoratorConfiguration,
 } from '../types';
 
 const methodNames = Object.fromEntries(
