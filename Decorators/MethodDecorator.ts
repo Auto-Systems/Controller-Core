@@ -9,22 +9,6 @@ const methodNames = Object.fromEntries(
   Object.entries(ControllerMethodENUM),
 ) as { [key in ControllerMethodENUM]: string };
 
-/*
-const methodNames: MethodNames = {
-  listNodes: 'listNodes',
-  listNetworks: 'listNetworks',
-  listStorage: 'listStorage',
-  initController: 'initController',
-  powerNode: 'powerNodes',
-  listHosts: 'listHosts',
-  createNode: 'createNode',
-  loginController: 'loginController',
-  listLibraries: 'listLibraries',
-  listTemplates: 'listTemplates',
-  getNodeInfo: 'getNodeInfo',
-  getLibraryItem: 'getLibraryItem',
-}; */
-
 export const getMethod = <T extends keyof ControllerModule>(
   key: T,
   controller: { [key: string]: ControllerModule[T] },
