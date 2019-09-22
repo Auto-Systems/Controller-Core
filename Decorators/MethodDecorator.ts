@@ -1,6 +1,15 @@
 // Backend/src/modules/Controller/Decorators/MethodDecorator.ts
-import { MethodDecoratorConfiguration, ControllerModule, MethodNames } from '../types';
+import {
+  MethodDecoratorConfiguration,
+  ControllerModule,
+  ControllerMethodENUM,
+} from '../types';
 
+const methodNames = Object.fromEntries(
+  Object.entries(ControllerMethodENUM),
+) as { [key in ControllerMethodENUM]: string };
+
+/*
 const methodNames: MethodNames = {
   listNodes: 'listNodes',
   listNetworks: 'listNetworks',
@@ -13,15 +22,17 @@ const methodNames: MethodNames = {
   listLibraries: 'listLibraries',
   listTemplates: 'listTemplates',
   getNodeInfo: 'getNodeInfo',
-  getLibraryItem: 'getLibraryItem'
-};
+  getLibraryItem: 'getLibraryItem',
+}; */
 
-// @ts-ignore
-export const loadMethod = <T extends keyof MethodNames>(key: T, controller: ControllerModule): ControllerModule[T] =>
-  // @ts-ignore
-  controller[methodNames[key] as keyof ControllerModule];
+export const getMethod = <T extends keyof ControllerModule>(
+  key: T,
+  controller: { [key: string]: ControllerModule[T] },
+): ControllerModule[T] => controller[methodNames[ControllerMethodENUM[key]]];
 
-export const controllerMethod = (config: MethodDecoratorConfiguration): MethodDecorator => {
+export const controllerMethod = (
+  config: MethodDecoratorConfiguration,
+): MethodDecorator => {
   return (target, propertyName, PropertyDescriptor) => {
     methodNames[config.type] = propertyName as string;
   };

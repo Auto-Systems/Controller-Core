@@ -1,2 +1,2 @@
-export * from './ControllerClass'
-export * from './MethodDecorator'
+export * from './ControllerClass';
+export * from './MethodDecorator';

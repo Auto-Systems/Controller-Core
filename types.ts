@@ -1,13 +1,13 @@
 // API/src/Controller/types.ts
 export enum NodeOS {
   UBUNTU = 'UBUNTU',
-  DEBIAN = 'DEBIAN'
+  DEBIAN = 'DEBIAN',
 }
 
 export enum NodePower {
   ON = 'ON',
   OFF = 'OFF',
-  SUSPENDED = 'SUSPENDED'
+  SUSPENDED = 'SUSPENDED',
 }
 
 export interface Node {
@@ -45,7 +45,7 @@ export interface Templates {
 }
 
 export interface NodeFilter {
-  names: string | string[];
+  names: string;
 }
 
 export enum ControllerMethodENUM {
@@ -60,23 +60,8 @@ export enum ControllerMethodENUM {
   'initController' = 'initController',
   'loginController' = 'loginController',
   'getNodeInfo' = 'getNodeInfo',
-  'getLibraryItem' = 'getLibraryItem'
+  'getLibraryItem' = 'getLibraryItem',
 }
-
-type ControllerMethod =
-  | 'powerNode'
-  | 'listNodes'
-  | 'listHosts'
-  | 'listNetworks'
-  | 'listStorage'
-  | 'createNode'
-  | 'initController'
-  | 'loginController'
-  | 'listTemplates'
-  | 'listLibraries'
-  | 'getNodeInfo'
-  | 'getLibraryItem'
-  | ControllerMethodENUM;
 
 export enum LibraryItemTypeENUM {
   'nodeTemplate' = 'nodeTemplate',
@@ -167,6 +152,11 @@ export interface ControllerModule {
   listLibraries: (filter?: string) => Promise<Library[]>;
 
   /**
+   * List Templates
+   */
+  listTemplates: () => Promise<any>;
+
+  /**
    * Get Node's information, OS, Power  state, Network
    */
   getNodeInfo: (nodeId: string) => Promise<NodeInfo>;
@@ -174,7 +164,7 @@ export interface ControllerModule {
   /**
    * Get Single Library item
    */
-  getLibraryItem: (itemId: string) => Promise<LibraryItem>
+  getLibraryItem: (itemId: string) => Promise<LibraryItem>;
 
   /**
    * Logs into the controller and returns a session token for use with initController for future uses of the API
@@ -183,15 +173,15 @@ export interface ControllerModule {
 }
 
 export interface MethodDecoratorConfiguration {
-  type: ControllerMethod;
+  type: keyof ControllerModule;
 }
 
 export interface ControllerConfiguration {
   name: string;
 }
 
-export type MethodNames = { [method in ControllerMethod]: string };
-
 export interface ControllerClass {
-  new (): ControllerModule;
+  new <T extends keyof ControllerModule>(): {
+    [key: string]: ControllerModule[T];
+  };
 }
